@@ -31,7 +31,10 @@ function addRandomQuote() {
 }
 
 function getGreeting() {
-  fetch('/data').then(response => response.text()).then((greet) => {
-    document.getElementById('greet-container').innerText = greet;
+  fetch('/data').then(response => response.json()).then((myObject) => {
+    document.getElementById('greet-container').innerText = myObject.FirstName + " " + myObject.LastName + " "  + myObject.Age ;
+    console.log(myObject.FirstName);
+    console.log(myObject.LastName);
+    console.log(myObject.Age);
   });
 }
