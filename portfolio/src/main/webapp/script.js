@@ -26,7 +26,7 @@ function addRandomQuote() {
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
+  const greetingContainer = document.getElementById('quote-container');
   greetingContainer.innerText = greeting;
 }
 
