@@ -26,12 +26,12 @@ function addRandomQuote() {
   const greeting = greetings[Math.floor(Math.random() * greetings.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('quote-container');
+  const greetingContainer = document.getElementById('random-quote-container');
   greetingContainer.innerText = greeting;
 }
 
 function getGreeting() {
   fetch('/data').then(response => response.text()).then((greet) => {
-    document.getElementById('greet-container').innerText =greet;
+    document.getElementById('greet-container').innerText = greet;
   });
 }
