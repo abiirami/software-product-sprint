@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getComment()">
     <div id="content">
         <h1>Abi's Portfolio</h1>
         <button onclick="addRandomQuote()">Click here to see a random quote!</button>
         <div id="random-quote-container"></div>
-        <button onclick="getGreeting()">Click here to fetch greeting!</button>
-        <div id="greet-container"></div>
+        <!--<button onclick="getGreeting()">Click here to fetch greeting!</button>
+        <div ßid="greet-container"></div>-->
         <h2>About Me</h2>
         <p>My name is Abirami Patchaiyappan, Abi for short. I am currently a sophmore at UC Santa Cruz, studying computer science and cognitive science. I love arts and creativity.</p>
         <div id="me">
@@ -40,6 +40,22 @@
                 <li><a href="https://github.com/abiirami">Github</a></li>
             </ul>
         </div>
+        <form action="/data" method="POST">
+            <p>Comments?</p>
+            <textarea name="text-input">Enter any comments here...</textarea>
+            <br/><br/>
+
+            <!--Something to implement in the future-->
+            <!--<p>Rate the page:</p>
+            <input type="checkbox" name="upper-case" value="true"> Upper-case
+            <br/>
+            <input type="checkbox" name="sort" value="true"> Alphabetize
+            <br/><br/>-->
+                
+            <input type="submit" />
+        </form>
+        <div id="comments-container"></div>
+        <div id="history"></div>
     </div>
   </body>
 </html>
