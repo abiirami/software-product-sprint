@@ -32,6 +32,6 @@ function addRandomQuote() {
 
 function getGreeting() {
   fetch('/data').then(response => response.text()).then((greet) => {
-    document.getElementById('greet-container').innerText =greet;
+    document.getElementById('greet-container').innerText = greet;
   });
 }
