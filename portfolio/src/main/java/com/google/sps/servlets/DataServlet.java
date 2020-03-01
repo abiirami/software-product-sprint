@@ -14,7 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.*;
 import com.google.gson.Gson;
+//import com.google.sps.data.Task;
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -43,10 +45,36 @@ public class DataServlet extends HttpServlet {
     // creates arrayList of comments
     comments.add(text);
 
-    // Respond with the result + redirectts
-    response.setContentType("text/html;");
-    response.getWriter().println(Arrays.toString(comments.toArray()));
+    //Datastore
+    String com = request.getParameter("text-input");
+
+    Entity taskEntity = new Entity("Task");
+    taskEntity.setProperty("comment", com);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
+
     response.sendRedirect("/index.html");
+
+    //Query
+    Query query = new Query("Task");
+
+    //DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    List<String> tasks = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
+      String title = (String) entity.getProperty("title");
+    
+      String task = title;
+      tasks.add(task);
+    }
+
+    Gson gson = new Gson();
+
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(tasks));
   }
 
   private String getParameter(HttpServletRequest request, String name, String defaultValue) {
