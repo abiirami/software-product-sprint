@@ -53,11 +53,6 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    String text = getParameter(request, "comment-input", "");
-
-    // adds to stored list of comments
-    comments.add(text);
-
     //Datastore
     String commentText = request.getParameter("comment-input");
 
