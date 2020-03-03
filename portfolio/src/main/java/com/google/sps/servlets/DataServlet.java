@@ -15,11 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.appengine.api.datastore.*;
-<<<<<<< HEAD
-import com.google.gson.*;
-=======
 import com.google.gson.Gson;
->>>>>>> 938c2c3e12f97becd762dd1b5123b76f4a042617
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
