@@ -46,7 +46,7 @@ public class DataServlet extends HttpServlet {
     comments.add(text);
 
     //Datastore
-    String com = request.getParameter("text-input");
+    String commentText = request.getParameter("text-input");
 
     Entity taskEntity = new Entity("Task");
     taskEntity.setProperty("comment", com);
