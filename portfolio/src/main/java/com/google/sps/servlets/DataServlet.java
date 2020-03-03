@@ -32,7 +32,7 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     //Query
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    Query query = new Query("Task");
+    Query query = new Query("Comment");
 
     PreparedQuery results = datastore.prepare(query);
 
