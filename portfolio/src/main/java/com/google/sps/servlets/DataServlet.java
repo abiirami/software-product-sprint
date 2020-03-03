@@ -27,7 +27,6 @@ import java.util.*;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
     public ArrayList<String> list = new ArrayList<String>();
-    ArrayList<String> comments = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
