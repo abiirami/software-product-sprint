@@ -14,7 +14,10 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.*;
+import com.google.gson.*;
 import java.io.IOException;
+import com.google.sps.data.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,20 +31,46 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    list.add("Abi");
-    list.add("Patchaiyappan");
-    list.add("19");
-    String json = "{";
-    json += "\"FirstName\": ";
-    json += "\"" + list.get(0) + "\"";
-    json += ", ";
-    json += "\"LastName\": ";
-    json += "\"" + list.get(1) + "\"";
-    json += ", ";
-    json += "\"Age\": ";
-    json += "\"" + list.get(2) + "\"";
-    json += "}";
-    response.setContentType("application/json");
-    response.getWriter().println(json);
+    //Query
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Comment");
+
+    PreparedQuery results = datastore.prepare(query);
+
+    List<Comment> comments = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
+      long id = entity.getKey().getId();
+      String comment = (String) entity.getProperty("text");
+
+      Comment msg = new Comment(id, comment);
+      comments.add(msg);
+    }
+
+    Gson gson = new Gson();
+    response.setContentType("application/json;");
+    response.getWriter().println(gson.toJson(comments));
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    //Datastore
+    String commentText = request.getParameter("comment-input");
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("text", commentText);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
+    response.sendRedirect("/index.html");
+  }
+
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }

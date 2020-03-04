@@ -30,11 +30,9 @@ function addRandomQuote() {
   greetingContainer.innerText = greeting;
 }
 
-function getGreeting() {
+function getComment() {
   fetch('/data').then(response => response.json()).then((myObject) => {
-    document.getElementById('greet-container').innerText = myObject.FirstName + " " + myObject.LastName + " "  + myObject.Age ;
-    console.log(myObject.FirstName);
-    console.log(myObject.LastName);
-    console.log(myObject.Age);
+    const comments = JSON.stringify(myObject);
+    document.getElementById('comments-container').innerText = comments;
   });
 }
