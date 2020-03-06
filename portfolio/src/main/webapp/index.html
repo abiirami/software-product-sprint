@@ -53,7 +53,7 @@
             <input type="submit" />
         </form>
         <div id="comments-container" onload="getComment()"></div>
-        <form action="/data" method="POST">
+        <form action="/data" method="GET">
         <input list="languages" name="language">
         <datalist id="languages" onchange="getComment()">
             <option value="es">English</option>

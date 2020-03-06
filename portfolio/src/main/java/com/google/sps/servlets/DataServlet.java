@@ -31,6 +31,10 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    //Translate
+    String lang = request.getParameter("language");
+    System.out.println(lang);
+    
     //Query
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query("Comment");
@@ -49,14 +53,13 @@ public class DataServlet extends HttpServlet {
     Gson gson = new Gson();
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
+
+    response.sendRedirect("/index.html");
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
-    //Translate
-    String lang = request.getParameter("language");
-    System.out.println(lang);
     //Datastore
     String commentText = request.getParameter("comment-input");
 
