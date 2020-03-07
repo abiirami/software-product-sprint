@@ -18,11 +18,19 @@ package com.google.sps.data;
 public final class Comment {
 
   private final long id;
-  private final String text;
+  private String text;
   //private final long timestamp;
 
   public Comment(long id, String text){
     this.id = id;
     this.text = text;
+  }
+
+  public String getText(){
+      return text;
+  }
+
+  public void setText(String text){
+      this.text = text;
   }
 }

@@ -14,6 +14,7 @@
 
 package com.google.sps.servlets;
 
+import com.google.cloud.translate.*;
 import com.google.appengine.api.datastore.*;
 import com.google.gson.*;
 import java.io.IOException;
@@ -28,38 +29,39 @@ import java.util.*;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
     public ArrayList<String> list = new ArrayList<String>();
+    public String lang;
 
   @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    //Translate
-    String lang = request.getParameter("language");
-    System.out.println(lang);
-    
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException { 
     //Query
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     Query query = new Query("Comment");
 
     PreparedQuery results = datastore.prepare(query);
-
-    List<Comment> comments = new ArrayList<>();
+    ArrayList<Comment> comments = new ArrayList<Comment>();
     for (Entity entity : results.asIterable()) {
-      long id = entity.getKey().getId();
-      String comment = (String) entity.getProperty("text");
-
-      Comment msg = new Comment(id, comment);
-      comments.add(msg);
+        long id = entity.getKey().getId();
+        String comment = (String) entity.getProperty("text");
+        if(lang != null && comment != null){
+            Translate translate = TranslateOptions.getDefaultInstance().getService();
+            Translation translation = translate.translate(comment, Translate.TranslateOption.targetLanguage(lang));
+            String translatedText = translation.getTranslatedText();
+            comment = translatedText;
+        }
+        Comment msg = new Comment(id, comment);
+        comments.add(msg);
     }
-
-    Gson gson = new Gson();
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     response.setContentType("application/json;");
     response.getWriter().println(gson.toJson(comments));
-
-    response.sendRedirect("/index.html");
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the input from the form.
+    //Get translate language
+    lang = request.getParameter("languages");
+
     //Datastore
     String commentText = request.getParameter("comment-input");
 
