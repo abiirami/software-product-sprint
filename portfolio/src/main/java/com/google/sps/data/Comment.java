@@ -18,7 +18,7 @@ package com.google.sps.data;
 public final class Comment {
 
   private final long id;
-  private String text;
+  private final String text;
   //private final long timestamp;
 
   public Comment(long id, String text){
@@ -26,11 +26,4 @@ public final class Comment {
     this.text = text;
   }
 
-  public String getText(){
-      return text;
-  }
-
-  public void setText(String text){
-      this.text = text;
-  }
 }
