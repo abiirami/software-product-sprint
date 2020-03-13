@@ -53,7 +53,17 @@
             <input type="submit" />
         </form>
         <div id="comments-container" onload="getComment()"></div>
-        <div id="history"></div>
+        <form action="/data" method="POST">
+        <input list="languages" name="languages">
+        <datalist id="languages" onchange="getComment()">
+            <option value="es">English</option>
+            <option value="zh">Chinese</option>
+            <option value="es">Spanish</option>
+            <option value="hi">Hindi</option>
+            <option value="ar">Arabic</option>
+        </datalist> 
+        <input type="submit"/>
+        </form>
     </div>
   </body>
 </html>

@@ -25,4 +25,5 @@ public final class Comment {
     this.id = id;
     this.text = text;
   }
+
 }
